@@ -45,13 +45,13 @@ const MemoryGame = () => {
     let interval = null;
     if (won) {
       clearInterval(interval);
-    } else if (!isPaused && timer > 0) {
+    } else if (!isPaused) {
       interval = setInterval(() => {
         setTimer((prev) => prev + 1);
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [timer, won, isPaused]);
+  }, [won, isPaused]);
 
   const checkMatch = (secondId) => {
     const [firstId] = flipped;
@@ -117,11 +117,9 @@ const MemoryGame = () => {
     <div
       className={`flex flex-col items-center justify-center min-h-screen bg-${
         theme === "light" ? "gray-100" : "gray-900"
-      } p-4`}
+      } p-4 text-${theme === "light" ? "black" : "white"}`}
     >
-      <h1 className="text-4xl font-bold mb-6 text-gray-800 dark:text-white">
-        Memory Game
-      </h1>
+      <h1 className="text-4xl font-bold mb-6">Memory Game</h1>
 
       {/* Theme Toggle */}
       <button
@@ -133,7 +131,7 @@ const MemoryGame = () => {
 
       {/* Grid Size Input */}
       <div className="mb-4 flex flex-col items-center">
-        <label htmlFor="gridSize" className="mb-2 text-lg dark:text-gray-300">
+        <label htmlFor="gridSize" className="mb-2 text-lg">
           Grid Size: (max 10)
         </label>
         <input
@@ -148,7 +146,7 @@ const MemoryGame = () => {
       </div>
 
       {/* Timer and Move Counter */}
-      <div className="mb-4 text-lg dark:text-gray-300">
+      <div className="mb-4 text-lg">
         <span className="mr-4">Time: {timer} s</span>
         <span>Moves: {moves}</span>
       </div>
@@ -165,7 +163,7 @@ const MemoryGame = () => {
 
       {/* Game Board */}
       <div
-        className={`grid gap-4 mb-4`}
+        className="grid gap-4 mb-4"
         style={{
           gridTemplateColumns: `repeat(${gridSize}, minmax(0, 1fr))`,
           width: `min(100%, ${gridSize * 5.5}rem)`,
@@ -199,7 +197,7 @@ const MemoryGame = () => {
 
       {/* High Score Display */}
       {highScore !== null && (
-        <div className="mt-2 text-xl font-semibold text-gray-700 dark:text-gray-300">
+        <div className="mt-2 text-xl font-semibold">
           High Score: {highScore} s
           <button
             onClick={resetHighScore}
